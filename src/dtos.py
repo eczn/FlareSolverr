@@ -12,6 +12,7 @@ class ChallengeResolutionResultT:
     userAgent: str = None
     screenshot: str | None = None
     turnstile_token: str = None
+    evalScriptResult: str = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)
@@ -51,6 +52,8 @@ class V1RequestBase(object):
     disableMedia: bool = None
     # Optional when you've got a turnstile captcha that needs to be clicked after X number of Tab presses
     tabs_till_verify : int = None
+    # Optional JS script to execute after the page is ready, result returned as string
+    evalScript: str = None
 
     def __init__(self, _dict):
         self.__dict__.update(_dict)

@@ -176,6 +176,9 @@ def get_webdriver(proxy: dict = None) -> WebDriver:
     if get_config_headless():
         if os.name == 'nt':
             windows_headless = True
+        elif sys.platform == 'darwin':
+            # macOS: Chrome now supports native headless mode, no Xvfb needed
+            pass
         else:
             start_xvfb_display()
     # For normal headless mode:

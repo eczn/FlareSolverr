@@ -470,6 +470,17 @@ def _evil_logic(req: V1RequestBase, driver: WebDriver, method: str) -> Challenge
     challenge_res.userAgent = utils.get_user_agent(driver)
     challenge_res.turnstile_token = turnstile_token
 
+    # execute evalScript if provided
+    if req.evalScript is not None:
+        logging.info("Executing evalScript...")
+        try:
+            result = driver.execute_script(req.evalScript)
+            challenge_res.evalScriptResult = str(result)
+            logging.debug("evalScript result: " + str(result))
+        except Exception as e:
+            logging.warning("evalScript execution failed: " + str(e))
+            challenge_res.evalScriptResult = None
+
     if not req.returnOnlyCookies:
         challenge_res.headers = {}  # todo: fix, selenium not provides this info
 
